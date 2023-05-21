@@ -3,16 +3,18 @@ import sys
 from snake import *
 from scene import *
 from sprites import *
+from food import *
 
 
 class SnakeGame:
     def __init__(self):
-        self.HEIGHT = 600
-        self.WIDTH = 800
+        self.HEIGHT = 700
+        self.WIDTH = 700
         self.FPS = 60
 
         # Objects
         self.clock = pg.time.Clock()
+        self.food = Food(self)
         self.snake = Snake()
         self.scene = Scene(self)
 
@@ -29,9 +31,11 @@ class SnakeGame:
             self.display.fill((0, 0, 0))
             self.display.blit(self.scene.scene, self.scene.rect)
             self.display.blit(self.snake.hero, self.snake.rect)
+            self.display.blit(self.food.scene, self.food.rect)
 
             self.scene.update()
             self.snake.update()
+            self.food.update(self, self.snake)
 
             pg.display.flip()
 

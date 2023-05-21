@@ -1,4 +1,5 @@
 class Sprites:
     SNAKE = ""
-    BACKGROUND = "GrassSprite.jpg"
+    BACKGROUND = "grassSprite.png"
     ICON = "SnakeIcon.png"
+    FOOD = "FoodApple.png"
