@@ -1,22 +1,21 @@
 import pygame as pg
 import sys
+
+
 from snake import *
 from scene import *
 from sprites import *
 from food import *
+from menu import *
 
 
 class SnakeGame:
     def __init__(self):
+        pg.init()
+
         self.HEIGHT = 700
         self.WIDTH = 700
         self.FPS = 60
-
-        # Objects
-        self.clock = pg.time.Clock()
-        self.food = Food(self)
-        self.snake = Snake()
-        self.scene = Scene(self)
 
         # Display
         pg.display.set_caption("Snake")
@@ -27,11 +26,20 @@ class SnakeGame:
         self.clock = pg.time.Clock()
         self.snake = Snake()
         self.scene = Scene(self)
+        self.food = Food(self)
+
+        # Menu
+        buttons = [Button(self.start_game, Sprites.BUTTON_START),
+                   Button(self.quit_game, Sprites.BUTTON_OPTIONS),
+                   Button(self.quit_game, Sprites.BUTTON_EXIT)
+                   ]
+        self.menu = Menu(self.display, self.WIDTH, self.HEIGHT, buttons)
+        pg.font.init()
 
         pg.display.update()
-        self.run()
+        self.menu.run()
 
-    def run(self):
+    def start_game(self):
         while True:
             self.display.blit(self.scene.scene, self.scene.rect)
             for snake_part in self.snake.snake_parts:
@@ -53,5 +61,8 @@ class SnakeGame:
 
             pg.time.delay(10)
 
+    def quit_game(self):
+        pg.quit()
+        sys.exit()
 
 program = SnakeGame()
