@@ -3,6 +3,6 @@ class Sprites:
     SNAKE_BODY = "body.png"
     SNAKE_TAIL = "tail.png"
     SNAKE_TURN = "turn.png"
-    BACKGROUND = "grassSprite.png"
+    BACKGROUND = "background.png"
     ICON = "SnakeIcon.png"
-    FOOD = "FoodApple.png"
+    FOOD = "food.png"
