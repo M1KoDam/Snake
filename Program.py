@@ -23,14 +23,19 @@ class SnakeGame:
         pg.display.set_icon(pg.image.load(Sprites.ICON))
         self.display = pg.display.set_mode((self.WIDTH, self.HEIGHT))
 
+        # Objects
+        self.clock = pg.time.Clock()
+        self.snake = Snake()
+        self.scene = Scene(self)
+
         pg.display.update()
         self.run()
 
     def run(self):
         while True:
-            self.display.fill((0, 0, 0))
             self.display.blit(self.scene.scene, self.scene.rect)
-            self.display.blit(self.snake.hero, self.snake.rect)
+            for snake_part in self.snake.snake_parts:
+                self.display.blit(snake_part.surf, snake_part.rect)
             self.display.blit(self.food.scene, self.food.rect)
 
             self.scene.update()
