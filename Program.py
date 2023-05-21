@@ -2,6 +2,7 @@ import pygame as pg
 import sys
 from snake import *
 from scene import *
+from sprites import *
 
 
 class SnakeGame:
@@ -10,12 +11,14 @@ class SnakeGame:
         self.WIDTH = 800
         self.FPS = 60
 
+        # Objects
         self.clock = pg.time.Clock()
         self.snake = Snake()
-        self.scene = Scene()
+        self.scene = Scene(self)
 
+        # Display
         pg.display.set_caption("Snake")
-        pg.display.set_icon(pg.image.load("SnakeIcon.png"))
+        pg.display.set_icon(pg.image.load(Sprites.ICON))
         self.display = pg.display.set_mode((self.WIDTH, self.HEIGHT))
 
         pg.display.update()
