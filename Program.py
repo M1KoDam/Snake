@@ -28,7 +28,7 @@ class SnakeGame:
             self.display.blit(self.snake.hero, self.snake.rect)
 
             self.scene.update()
-            self.snake.move()
+            self.snake.update()
 
             pg.display.flip()
 
