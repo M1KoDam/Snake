@@ -2,6 +2,7 @@ import pygame as pg
 import random
 from sprites import *
 
+
 class Food:
     def __init__(self, program):
         self.SIZE = 64
