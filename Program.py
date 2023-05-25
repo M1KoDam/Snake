@@ -42,12 +42,21 @@ class SnakeGame:
     def start_game(self):
         while True:
             self.display.blit(self.scene.scene, self.scene.rect)
+
             for snake_part in self.snake.snake_parts:
                 self.display.blit(snake_part.surf, snake_part.rect)
+
+            for change_rotation_part in self.snake.change_rotation_parts:
+                self.display.blit(change_rotation_part.surf, change_rotation_part.rect)
+
             self.display.blit(self.food.scene, self.food.rect)
 
             self.scene.update()
             self.snake.update()
+
+            if self.snake.check_self_collision():
+                print("Pizdez, bolno!!!")
+
             self.food.update(self, self.snake)
 
             pg.display.flip()

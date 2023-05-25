@@ -19,8 +19,9 @@ def calculate_coordinates(snake):
     return coords
 
 
-class SnakePart:
+class SnakePart(pg.sprite.Sprite):
     def __init__(self, sprite, snake, parts, prev_movements, movement):
+        super().__init__()
         self.DIRECTION = 0
         self.surf = pg.image.load(sprite)
         self.surf = pg.transform.scale(self.surf, (snake.SIZE, snake.SIZE))

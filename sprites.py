@@ -6,7 +6,7 @@ class Sprites:
     BACKGROUND = "sprites/grassSprite.png"
     BACKGROUND_MENU = "sprites/background_menu.png"
     ICON = "sprites/SnakeIcon.png"
-    FOOD = "sprites/FoodApple.png"
+    FOOD = "sprites/food.png"
     FON = "sprites/fon.png"
     BUTTON_START = "sprites/button_start.png"
     BUTTON_OPTIONS = "sprites/button_options.png"
