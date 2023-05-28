@@ -44,6 +44,7 @@ class SnakeGame:
         # Music
         self.background_music = AudioManager("musics/shrekOnSaksofon.mp3", 0.5)
         self.pause_Music = False
+        self.background_music.play(-1)
 
         # Menu
         buttons = [Button(self.start_game, Sprites.BUTTON_START),
@@ -81,7 +82,7 @@ class SnakeGame:
         self.score = Score(10, 10)
         self.pause = PauseButton((self.WIDTH - 118) / 2,
                                  (self.HEIGHT - 56) / 2)
-        self.background_music.play(-1)
+
 
 
         # Menu
