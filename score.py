@@ -22,3 +22,7 @@ class Score:
     def increment_score(self):
         self.score += 1
         self.update()
+
+    def decrement_score(self):
+        self.score -= 1
+        self.update()

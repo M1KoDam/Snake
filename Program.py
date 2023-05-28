@@ -52,6 +52,9 @@ class SnakeGame:
         self.scene = Scene(self)
         self.food = Food(self, True)
         self.bug = Food(self, False)
+        self.score = Score(10, 10)
+        self.pause = PauseButton((self.WIDTH - 118) / 2,
+                                 (self.HEIGHT - 56) / 2)
 
         # Menu
         buttons = [Button(self.start_game, Sprites.BUTTON_START),
@@ -76,8 +79,6 @@ class SnakeGame:
                 self.display.blit(change_rotation_part.surf,
                                   change_rotation_part.rect)
 
-            self.display.blit(self.food.scene, self.food.rect)
-
             self.scene.update()
             self.snake.update()
 
@@ -89,8 +90,12 @@ class SnakeGame:
                     or self.snake.check_scene_collision(self.scene):
                 self.GAME_RUNNING = False
 
-            self.food.update(self, self.snake)
-            self.bug.update(self, self.snake)
+            self.display.blit(self.food.scene, self.food.rect)
+            self.display.blit(self.bug.scene, self.bug.rect)
+
+            self.food.update(self, self.snake, self.score)
+            self.bug.update(self, self.snake, self.score)
+            self.score.draw(self.display)
 
             pg.display.flip()
             self.clock.tick(self.FPS)
