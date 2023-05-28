@@ -41,4 +41,9 @@ class SnakePart(pg.sprite.Sprite):
         self.surf = pg.transform.rotate(self.surf, angle)
         self.DIRECTION += angle
 
+    def update_sprite(self, sprite, snake):
+        self.surf = pg.image.load(sprite)
+        self.surf = pg.transform.scale(self.surf, (snake.SIZE, snake.SIZE))
+        self.surf = pg.transform.rotate(self.surf, self.DIRECTION)
+
 

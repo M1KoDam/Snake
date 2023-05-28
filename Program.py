@@ -26,7 +26,8 @@ class SnakeGame:
         self.clock = pg.time.Clock()
         self.snake = Snake()
         self.scene = Scene(self)
-        self.food = Food(self)
+        self.food = Food(self, True)
+        self.bug = Food(self, False)
 
         # Menu
         buttons = [Button(self.start_game, Sprites.BUTTON_START),
@@ -45,7 +46,8 @@ class SnakeGame:
         self.clock = pg.time.Clock()
         self.snake = Snake()
         self.scene = Scene(self)
-        self.food = Food(self)
+        self.food = Food(self, True)
+        self.bug = Food(self, False)
 
         # Menu
         buttons = [Button(self.start_game, Sprites.BUTTON_START),
@@ -71,14 +73,21 @@ class SnakeGame:
                                   change_rotation_part.rect)
 
             self.display.blit(self.food.scene, self.food.rect)
+            self.display.blit(self.bug.scene, self.bug.rect)
 
             self.scene.update()
             self.snake.update()
 
-            if self.snake.check_self_collision():
+            if len(self.snake.snake_parts) >= 20:
+                print("WIN")
+
+            if self.snake.check_self_collision() \
+                    or len(self.snake.snake_parts) < 2 \
+                    or self.snake.check_scene_collision(self.scene):
                 self.GAME_RUNNING = False
 
             self.food.update(self, self.snake)
+            self.bug.update(self, self.snake)
 
             pg.display.flip()
             self.clock.tick(self.FPS)

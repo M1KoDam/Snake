@@ -54,7 +54,6 @@ class Snake:
         if angle < 0:
             new_angle += 90
 
-        print(self.snake_parts[0].DIRECTION)
         self.change_rotation_parts.append(
             SnakeRotatePart(Sprites.SNAKE_TURN, self,
                             (self.snake_parts[0].rect.x,
@@ -62,6 +61,10 @@ class Snake:
 
         self.movement = Movement(x, y, angle)
         self.direction_delay = 0
+
+    def delete_part(self):
+        self.snake_parts.pop()
+        self.snake_parts[-1].update_sprite(Sprites.SNAKE_TAIL, self)
 
     def add_part(self):
         angle = self.snake_parts[-1].DIRECTION
@@ -71,6 +74,7 @@ class Snake:
         new_snake_part = SnakePart(Sprites.SNAKE_TAIL, self, 1,
                                    self.snake_parts[-1].movements.copy(),
                                    self.snake_parts[-1].movements[0])
+
         new_snake_part.rotate(angle)
         self.snake_parts.append(new_snake_part)
 
@@ -81,3 +85,12 @@ class Snake:
                     head.rect) and self.direction_delay >= self.SIZE + 1:
                 return True
         return False
+
+    def check_scene_collision(self, scene):
+        head = self.snake_parts[0].rect
+        if head.x < 0 or head.x + self.SIZE > scene.WIDTH:
+            return True
+        if head.y < 0 or head.y + self.SIZE > scene.HEIGHT:
+            return True
+        return False
+
