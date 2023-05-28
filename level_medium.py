@@ -2,7 +2,7 @@ import pygame as pg
 from sprites import *
 
 
-class Scene:
+class Level_Medium:
     def __init__(self, program):
         self.WIDTH = program.WIDTH
         self.HEIGHT = program.HEIGHT
