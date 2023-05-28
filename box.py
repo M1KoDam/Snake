@@ -3,7 +3,7 @@ import random
 from sprites import *
 
 
-class Food:
+class Box:
     def __init__(self, x, y):
         self.SIZE = 64
         self.X = x

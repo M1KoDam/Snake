@@ -9,7 +9,7 @@ class Snake:
     def __init__(self):
         self.SIZE = 64
         self.SPEED = 4
-        self.START_COORDS = (100, 100)
+        self.START_COORDS = (64, 64)
         self.direction_delay = 0
         self.movement = Movement(self.SPEED, 0, 0)
 
@@ -86,11 +86,19 @@ class Snake:
                 return True
         return False
 
-    def check_scene_collision(self, scene):
+    def check_box_collision(self, level):
+        head = self.snake_parts[0]
+        for box in level.boxes:
+            if box.rect.colliderect(
+                    head.rect):
+                return True
+        return False
+
+    def check_scene_collision(self, level):
         head = self.snake_parts[0].rect
-        if head.x < 0 or head.x + self.SIZE > scene.WIDTH:
+        if head.x < 0 or head.x + self.SIZE > level.WIDTH:
             return True
-        if head.y < 0 or head.y + self.SIZE > scene.HEIGHT:
+        if head.y < 0 or head.y + self.SIZE > level.HEIGHT:
             return True
         return False
 
