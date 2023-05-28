@@ -11,5 +11,7 @@ class Sprites:
     BUTTON_START = "sprites/button_start.png"
     BUTTON_OPTIONS = "sprites/button_options.png"
     BUTTON_EXIT = "sprites/button_exit.png"
+    BUTTON_PAUSE = "sprites/button_pause.png"
+    BUTTON_UNPAUSE = "sprites/button_unpause.png"
     BOX = "sprites/box.png"
     BUG = "sprites/bug.png"
