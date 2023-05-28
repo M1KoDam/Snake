@@ -1,7 +1,6 @@
 import pygame as pg
 import sys
 
-
 from snake import *
 from scene import *
 from sprites import *
@@ -18,6 +17,7 @@ class SnakeGame:
         self.HEIGHT = 700
         self.WIDTH = 700
         self.FPS = 60
+        self.GAME_RUNNING = True
 
         # Display
         pg.display.set_caption("Snake")
@@ -44,14 +44,35 @@ class SnakeGame:
         self.menu.run()
 
     def start_game(self):
-        while True:
+        self.GAME_RUNNING = True
+
+        self.clock = pg.time.Clock()
+        self.snake = Snake()
+        self.scene = Scene(self)
+        self.food = Food(self)
+
+        # Menu
+        buttons = [Button(self.start_game, Sprites.BUTTON_START),
+                   Button(self.quit_game, Sprites.BUTTON_OPTIONS),
+                   Button(self.quit_game, Sprites.BUTTON_EXIT)
+                   ]
+        self.menu = Menu(self.display, self.WIDTH, self.HEIGHT, buttons)
+        pg.font.init()
+
+        pg.display.update()
+
+        self.run()
+
+    def run(self):
+        while self.GAME_RUNNING:
             self.display.blit(self.scene.surf, self.scene.rect)
 
             for snake_part in self.snake.snake_parts:
                 self.display.blit(snake_part.surf, snake_part.rect)
 
             for change_rotation_part in self.snake.change_rotation_parts:
-                self.display.blit(change_rotation_part.surf, change_rotation_part.rect)
+                self.display.blit(change_rotation_part.surf,
+                                  change_rotation_part.rect)
 
             self.display.blit(self.food.scene, self.food.rect)
 
@@ -60,12 +81,11 @@ class SnakeGame:
             self.score.draw(self.display)
 
             if self.snake.check_self_collision():
-                print("Pizdez, bolno!!!")
+                self.GAME_RUNNING = False
 
             self.food.update(self, self.snake, self.score)
 
             pg.display.flip()
-
             self.clock.tick(self.FPS)
 
             for i in pg.event.get():
@@ -89,5 +109,6 @@ class SnakeGame:
     def quit_game(self):
         pg.quit()
         sys.exit()
+
 
 program = SnakeGame()

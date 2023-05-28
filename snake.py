@@ -27,8 +27,11 @@ class Snake:
         for snake_part in self.snake_parts:
             snake_part.move()
 
+        temp_change_rotation_part = []
         for change_rotation_part in self.change_rotation_parts:
-            change_rotation_part.update(self.snake_parts[-1])
+            if not(change_rotation_part.update(self.snake_parts[-1])):
+                temp_change_rotation_part.append(change_rotation_part)
+        self.change_rotation_parts = temp_change_rotation_part
 
         if self.direction_delay >= self.SIZE:
             keys = pg.key.get_pressed()
@@ -47,10 +50,15 @@ class Snake:
         self.direction_delay += self.SPEED
 
     def change_direction(self, x, y, angle):
-        #self.change_rotation_parts.append(
-        #    SnakeRotatePart(Sprites.SNAKE_TURN, self,
-        #                    (self.snake_parts[0].rect.x,
-        #                     self.snake_parts[0].rect.y)))
+        new_angle = self.snake_parts[0].DIRECTION
+        if angle < 0:
+            new_angle += 90
+
+        print(self.snake_parts[0].DIRECTION)
+        self.change_rotation_parts.append(
+            SnakeRotatePart(Sprites.SNAKE_TURN, self,
+                            (self.snake_parts[0].rect.x,
+                             self.snake_parts[0].rect.y), new_angle))
 
         self.movement = Movement(x, y, angle)
         self.direction_delay = 0
