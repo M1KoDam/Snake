@@ -7,9 +7,9 @@ class Scene:
         self.WIDTH = program.WIDTH
         self.HEIGHT = program.HEIGHT
 
-        self.surf = pg.image.load(Sprites.BACKGROUND)
-        self.surf = pg.transform.scale(self.surf, (self.WIDTH, self.HEIGHT))
-        self.rect = self.surf.get_rect(topleft=(0, 0))
+        self.scene = pg.image.load(Sprites.BACKGROUND)
+        self.scene = pg.transform.scale(self.scene, (self.WIDTH, self.HEIGHT))
+        self.rect = self.scene.get_rect(topleft=(0, 0))
 
     def update(self):
         pass

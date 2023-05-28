@@ -7,6 +7,8 @@ from scene import *
 from sprites import *
 from food import *
 from menu import *
+from score import *
+from pause import *
 
 
 class SnakeGame:
@@ -27,6 +29,8 @@ class SnakeGame:
         self.snake = Snake()
         self.scene = Scene(self)
         self.food = Food(self)
+        self.score = Score(10, 10)
+        self.pause = PauseButton((self.WIDTH-118)/2, (self.HEIGHT-56)/2)
 
         # Menu
         buttons = [Button(self.start_game, Sprites.BUTTON_START),
@@ -41,7 +45,7 @@ class SnakeGame:
 
     def start_game(self):
         while True:
-            self.display.blit(self.scene.scene, self.scene.rect)
+            self.display.blit(self.scene.surf, self.scene.rect)
 
             for snake_part in self.snake.snake_parts:
                 self.display.blit(snake_part.surf, snake_part.rect)
@@ -53,11 +57,12 @@ class SnakeGame:
 
             self.scene.update()
             self.snake.update()
+            self.score.draw(self.display)
 
             if self.snake.check_self_collision():
                 print("Pizdez, bolno!!!")
 
-            self.food.update(self, self.snake)
+            self.food.update(self, self.snake, self.score)
 
             pg.display.flip()
 
@@ -67,8 +72,19 @@ class SnakeGame:
                 if i.type == pg.QUIT:
                     pg.quit()
                     sys.exit()
+                if i.type == pg.KEYDOWN:
+                    if i.key == pg.K_ESCAPE:
+                        print("Pressed esc")
+                        self.pause.paused = not self.pause.paused
 
             pg.time.delay(10)
+
+            if self.pause.paused:
+                while self.pause.paused:
+                    self.pause.draw(self.display)
+                    pg.display.flip()
+                    for key in pg.event.get():
+                        self.pause.handle_event(key)
 
     def quit_game(self):
         pg.quit()

@@ -13,16 +13,17 @@ class Food:
         self.scene = pg.transform.scale(self.scene, (self.SIZE, self.SIZE))
         self.rect = self.scene.get_rect(topleft=(self.foodx, self.foody))
 
-    def update(self, program, snake):
+    def update(self, program, snake, score):
         self.scene = pg.image.load(Sprites.FOOD)
         self.scene = pg.transform.scale(self.scene, (self.SIZE, self.SIZE))
         self.rect = self.scene.get_rect(topleft=(self.foodx, self.foody))
-        self.is_eat(program, snake)
+        self.is_eat(program, snake, score)
 
-    def is_eat(self, program, snake):
+    def is_eat(self, program, snake, score):
 
         if self.rect.colliderect(snake.snake_parts[0].rect):
             print("eat")
+            score.increment_score()
             snake.add_part()
             self.foodx = round(random.randrange(0, program.WIDTH - snake.SIZE) / 10.0) * 10.0
             self.foody = round(random.randrange(0, program.WIDTH - snake.SIZE) / 10.0) * 10.0
