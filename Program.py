@@ -143,7 +143,7 @@ class SnakeGame:
                         self.pause.paused = not self.pause.paused
                     if i.key == pg.K_p:
                         self.pause_Music = not self.pause_Music
-                    if i.key == pg.K_PLUS:
+                    if i.key == pg.K_EQUALS:
                         self.background_music.set_volume(min(self.background_music.volume + 0.1, 1.0))
                     if i.key == pg.K_MINUS:
                         self.background_music.set_volume(max(self.background_music.volume - 0.1, 0.0))
