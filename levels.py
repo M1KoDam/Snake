@@ -29,7 +29,7 @@ class Level1(Level):
             for times in range(4):
                 self.boxes.append(Box(200, y))
 
-        for x in range(400, 400+129, 64):
+        for x in range(400, 400 + 129, 64):
             for times in range(3):
                 self.boxes.append(Box(x, 128))
 
@@ -75,4 +75,3 @@ class Level3(Level):
         self.boxes.append(Box(0, 350 - 32))
         self.boxes.append(Box(350 - 32, 700 - 64))
         self.boxes.append(Box(700 - 64, 350 - 32))
-

@@ -17,5 +17,3 @@ class Box:
         self.surf = pg.image.load(Sprites.BOX)
         self.surf = pg.transform.scale(self.surf, (self.SIZE, self.SIZE))
         self.rect = self.surf.get_rect(topleft=(self.X, self.Y))
-
-

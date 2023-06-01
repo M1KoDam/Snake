@@ -39,7 +39,8 @@ class SnakeGame:
         self.food = Food(self, True, self.snake.snake_parts + self.level.boxes)
         self.bug = Food(self, False, self.snake.snake_parts + self.level.boxes)
         self.score = Score(10, 10)
-        self.pause = PauseButton((self.WIDTH-118)/2, (self.HEIGHT-56)/2)
+        self.pause = PauseButton((self.WIDTH - 118) / 2,
+                                 (self.HEIGHT - 56) / 2)
 
         # Music
         self.background_music = AudioManager("musics/shrekOnSaksofon.mp3", 0.5)
@@ -83,8 +84,6 @@ class SnakeGame:
         self.pause = PauseButton((self.WIDTH - 118) / 2,
                                  (self.HEIGHT - 56) / 2)
 
-
-
         # Menu
         buttons = [Button(self.restart_game, Sprites.BUTTON_START),
                    Button(self.settings, Sprites.BUTTON_OPTIONS),
@@ -120,14 +119,16 @@ class SnakeGame:
 
             if self.snake.check_self_collision() \
                     or len(self.snake.snake_parts) < 2 \
-                    or self.snake.check_scene_collision(self.level)\
+                    or self.snake.check_scene_collision(self.level) \
                     or self.snake.check_box_collision(self.level):
                 self.HEALTH -= 1
                 self.restart_game()
 
             self.snake.update()
-            self.food.update(self, self.snake, self.score, self.snake.snake_parts + self.level.boxes)
-            self.bug.update(self, self.snake, self.score, self.snake.snake_parts + self.level.boxes)
+            self.food.update(self, self.snake,
+                             self.score, self.snake.snake_parts + self.level.boxes)
+            self.bug.update(self, self.snake,
+                            self.score, self.snake.snake_parts + self.level.boxes)
             self.score.draw(self.display)
 
             pg.display.flip()
@@ -144,15 +145,16 @@ class SnakeGame:
                     if i.key == pg.K_p:
                         self.pause_Music = not self.pause_Music
                     if i.key == pg.K_EQUALS:
-                        self.background_music.set_volume(min(self.background_music.volume + 0.1, 1.0))
+                        self.background_music.set_volume(
+                            min(self.background_music.volume + 0.1, 1.0))
                     if i.key == pg.K_MINUS:
-                        self.background_music.set_volume(max(self.background_music.volume - 0.1, 0.0))
+                        self.background_music.set_volume(
+                            max(self.background_music.volume - 0.1, 0.0))
 
             if self.pause_Music:
                 self.background_music.pause()
             else:
                 self.background_music.unpause()
-
 
             pg.time.delay(10)
 
@@ -167,13 +169,20 @@ class SnakeGame:
         running = True
         font = pg.font.SysFont('verdana', 17)
         font1 = pg.font.SysFont('verdana', 20)
-        text1 = font1.render('Инструкция по использованию игры:', True, (60, 179, 113))
-        text2 = font.render('Для управления змейкой используйте клавиши:', True, (60, 179, 113))
-        text3 = font.render('Стрелка влево и Стрелка вправо.', True, (60, 179, 113))
-        text4 = font.render('Чтобы приостановить игру, нажмите клавишу Esc.', True, (60, 179, 113))
-        text5 = font.render('Для изменения громкости музыки используйте клавиши + и -.', True, (60, 179, 113))
-        text6 = font.render('Для включения/выключения музыки во время игры нажмите клавишу P.', True, (60, 179, 113))
-        text7 = font.render('Нажмите Esc, чтобы вернуться в меню.', True, (60, 179, 113))
+        text1 = font1.render('Инструкция по использованию игры:',
+                             True, (60, 179, 113))
+        text2 = font.render('Для управления змейкой используйте клавиши:',
+                            True, (60, 179, 113))
+        text3 = font.render('Стрелка влево и Стрелка вправо.',
+                            True, (60, 179, 113))
+        text4 = font.render('Чтобы приостановить игру, нажмите клавишу Esc.',
+                            True, (60, 179, 113))
+        text5 = font.render('Для изменения громкости музыки используйте клавиши + и -.',
+                            True, (60, 179, 113))
+        text6 = font.render('Для включения/выключения музыки во время игры нажмите клавишу P.',
+                            True, (60, 179, 113))
+        text7 = font.render('Нажмите Esc, чтобы вернуться в меню.',
+                            True, (60, 179, 113))
 
         while running:
             for event in pg.event.get():

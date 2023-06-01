@@ -29,7 +29,7 @@ class Snake:
 
         temp_change_rotation_part = []
         for change_rotation_part in self.change_rotation_parts:
-            if not(change_rotation_part.update(self.snake_parts[-1])):
+            if not (change_rotation_part.update(self.snake_parts[-1])):
                 temp_change_rotation_part.append(change_rotation_part)
         self.change_rotation_parts = temp_change_rotation_part
 
@@ -101,4 +101,3 @@ class Snake:
         if head.y < 0 or head.y + self.SIZE > level.HEIGHT:
             return True
         return False
-

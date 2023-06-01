@@ -5,8 +5,8 @@ import sys
 
 class PauseButton:
     def __init__(self, x, y):
-        self.image = pg.image.load(Sprites.BUTTON_UNPAUSE)  # загрузка изображения с кнопкой
-        self.rect = self.image.get_rect(topleft=(x, y))  # получение прямоугольника, описывающего изображение кнопки
+        self.image = pg.image.load(Sprites.BUTTON_UNPAUSE)
+        self.rect = self.image.get_rect(topleft=(x, y))
         self.paused = False
 
     def handle_event(self, event):

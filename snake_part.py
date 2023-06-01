@@ -28,7 +28,7 @@ class SnakePart(pg.sprite.Sprite):
         self.rect = self.surf.get_rect(topleft=calculate_coordinates(snake))
 
         self.movements = prev_movements
-        for i in range(int(snake.SIZE/snake.SPEED) * parts):
+        for i in range(int(snake.SIZE / snake.SPEED) * parts):
             self.movements.append(movement)
 
     def move(self):
@@ -45,5 +45,3 @@ class SnakePart(pg.sprite.Sprite):
         self.surf = pg.image.load(sprite)
         self.surf = pg.transform.scale(self.surf, (snake.SIZE, snake.SIZE))
         self.surf = pg.transform.rotate(self.surf, self.DIRECTION)
-
-

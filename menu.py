@@ -29,7 +29,8 @@ class Menu:
 
         # Отрисовываем кнопки
         for index, button in enumerate(self.buttons):
-            button.rect = pygame.Rect(self.width // 2 - 73, button_top + index * 59, 146, 59)
+            button.rect = pygame.Rect(self.width // 2 - 73,
+                                      button_top + index * 59, 146, 59)
             self.screen.blit(button.image, button.rect),
 
         pygame.display.update()

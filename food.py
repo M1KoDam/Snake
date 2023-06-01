@@ -10,8 +10,10 @@ class Food:
             self.sprite = Sprites.BUG
 
         self.SIZE = 64
-        self.foodx = round(random.randint(1, program.WIDTH - self.SIZE) / self.SIZE) * self.SIZE
-        self.foody = round(random.randint(1, program.WIDTH - self.SIZE) / self.SIZE) * self.SIZE
+        self.foodx = round(random.randint(1, program.WIDTH - self.SIZE)
+                           / self.SIZE) * self.SIZE
+        self.foody = round(random.randint(1, program.WIDTH - self.SIZE)
+                           / self.SIZE) * self.SIZE
 
         self.scene = pg.image.load(self.sprite)
         self.scene = pg.transform.scale(self.scene, (self.SIZE, self.SIZE))
@@ -34,8 +36,10 @@ class Food:
             else:
                 snake.delete_part()
                 score.decrement_score()
-            self.foodx = round(random.randrange(0, program.WIDTH - snake.SIZE) / 10.0) * 10.0
-            self.foody = round(random.randrange(0, program.WIDTH - snake.SIZE) / 10.0) * 10.0
+            self.foodx = round(random.randrange(0, program.WIDTH - snake.SIZE)
+                               / 10.0) * 10.0
+            self.foody = round(random.randrange(0, program.WIDTH - snake.SIZE)
+                               / 10.0) * 10.0
             self.regenerate(program, another_rects)
 
     def check_regenerate(self, another_rects):
@@ -48,11 +52,12 @@ class Food:
     def regenerate(self, program, another_rects):
         while self.check_regenerate(another_rects):
             self.foodx = round(random.randint(1,
-                                              program.WIDTH - self.SIZE) / self.SIZE) * self.SIZE
+                                              program.WIDTH - self.SIZE)
+                               / self.SIZE) * self.SIZE
             self.foody = round(random.randint(1,
-                                              program.WIDTH - self.SIZE) / self.SIZE) * self.SIZE
+                                              program.WIDTH - self.SIZE)
+                               / self.SIZE) * self.SIZE
             self.scene = pg.image.load(self.sprite)
             self.scene = pg.transform.scale(self.scene,
                                             (self.SIZE, self.SIZE))
             self.rect = self.scene.get_rect(topleft=(self.foodx, self.foody))
-
