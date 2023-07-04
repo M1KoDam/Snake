@@ -1,12 +1,15 @@
 import pygame as pg
 import random
 from sprites import *
+from AudioManager import *
 
 
 class Food:
     def __init__(self, program, food, another_rects):
         self.sprite = Sprites.FOOD
+        self.eat_apple_sound = AudioManager("musics/sound_eating_good_food.mp3", 0.3, True)
         if not food:
+            self.eat_bug_sound = AudioManager("musics/sound_eating_bad_food.mp3", 0.3, True)
             self.sprite = Sprites.BUG
 
         self.SIZE = 64
@@ -31,9 +34,11 @@ class Food:
 
         if self.rect.colliderect(snake.snake_parts[0].rect):
             if self.sprite is Sprites.FOOD:
+                self.eat_apple_sound.play_sound()
                 snake.add_part()
                 score.increment_score()
             else:
+                self.eat_bug_sound.play_sound()
                 snake.delete_part()
                 score.decrement_score()
             self.foodx = round(random.randrange(0, program.WIDTH - snake.SIZE)

@@ -3,6 +3,7 @@ from snake_part import *
 from sprites import *
 from movement import *
 from snake_rotate_part import *
+from AudioManager import *
 
 
 class Snake:
@@ -22,6 +23,8 @@ class Snake:
         self.snake_parts.append(
             SnakePart(Sprites.SNAKE_TAIL, self, 1, [self.movement],
                       self.movement))
+
+        self.get_damage = AudioManager("musics/get_damage.mp3", 0.8, True)
 
     def update(self):
         for snake_part in self.snake_parts:
@@ -91,6 +94,7 @@ class Snake:
         for box in level.boxes:
             if box.rect.colliderect(
                     head.rect):
+                self.get_damage.play_sound()
                 return True
         return False
 

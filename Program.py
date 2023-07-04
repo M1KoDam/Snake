@@ -9,6 +9,7 @@ from menu import *
 from score import *
 from pause import *
 from AudioManager import *
+from health_bar import *
 
 
 class SnakeGame:
@@ -41,11 +42,12 @@ class SnakeGame:
         self.score = Score(10, 10)
         self.pause = PauseButton((self.WIDTH - 118) / 2,
                                  (self.HEIGHT - 56) / 2)
+        self.health_bar = Health(self.display)
 
         # Music
-        self.background_music = AudioManager("musics/shrekOnSaksofon.mp3", 0.5)
+        self.background_music = AudioManager("musics/shrekOnSaksofon.mp3", 0.5, False)
         self.pause_Music = False
-        self.background_music.play(-1)
+        self.background_music.play_music(-1)
 
         # Menu
         buttons = [Button(self.start_game, Sprites.BUTTON_START),
@@ -108,11 +110,11 @@ class SnakeGame:
             self.display.blit(self.food.scene, self.food.rect)
             self.display.blit(self.bug.scene, self.bug.rect)
 
+            self.health_bar.show_health(self.HEALTH)  # Показывает количество жизней
+
             if self.HEALTH <= 0:
                 self.GAME_RUNNING = False
                 return
-
-            print(self.HEALTH)
 
             if len(self.snake.snake_parts) >= self.TARGET:
                 self.next_level()
@@ -192,7 +194,7 @@ class SnakeGame:
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_ESCAPE:
                         running = False
-            bg_image = pg.image.load(Sprites.FON)
+            bg_image = pg.image.load(Sprites.BACKGROUND_MENU)
             bg_image1 = pg.transform.scale(bg_image, (700, 700))
             bg_rect = bg_image.get_rect()
             self.display.blit(bg_image1, bg_rect)

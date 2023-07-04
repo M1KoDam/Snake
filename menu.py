@@ -21,7 +21,7 @@ class Menu:
 
     def draw(self):
         # Отрисовываем фон меню
-        bg_image = pygame.image.load(Sprites.FON)
+        bg_image = pygame.image.load(Sprites.BACKGROUND_MENU)
         bg_image1 = pygame.transform.scale(bg_image, (700, 700))
         bg_rect = bg_image.get_rect()
         self.screen.blit(bg_image1, bg_rect)
