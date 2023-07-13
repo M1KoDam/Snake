@@ -22,7 +22,7 @@ class SnakeGame:
         self.FPS = 60
         self.GAME_RUNNING = True
         self.HEALTH = 3
-        self.TARGET = 17
+        self.TARGET = 15
 
         # Display
         pg.display.set_caption("Snake")
@@ -37,8 +37,15 @@ class SnakeGame:
         # Objects
         self.clock = pg.time.Clock()
         self.snake = Snake()
-        self.food = Food(self, True, self.snake.snake_parts + self.level.boxes)
-        self.bug = Food(self, False, self.snake.snake_parts + self.level.boxes)
+        self.objects = self.snake.snake_parts + self.level.boxes
+        self.food = Food(self, Sprites.APPLE, self.objects)
+        self.objects += [self.food]
+        self.bug = Food(self, Sprites.BUG, self.objects)
+        self.objects += [self.bug]
+        self.pizza = Food(self, Sprites.PIZZA, self.objects)
+        self.objects += [self.pizza]
+        self.carrot = Food(self, Sprites.CARROT, self.objects)
+        self.objects += [self.carrot]
         self.score = Score(10, 10)
         self.pause = PauseButton((self.WIDTH - 118) / 2,
                                  (self.HEIGHT - 56) / 2)
@@ -47,7 +54,7 @@ class SnakeGame:
         # Music
         self.background_music = AudioManager("musics/shrekOnSaksofon.mp3", 0.5, False)
         self.pause_Music = False
-        self.background_music.play_music(-1)
+        #self.background_music.play_music(-1)
 
         # Menu
         buttons = [Button(self.start_game, Sprites.BUTTON_START),
@@ -78,10 +85,11 @@ class SnakeGame:
         self.clock = pg.time.Clock()
         self.snake = Snake()
         self.level = self.levels[self.current_level]
-        self.food = Food(self, True,
-                         self.snake.snake_parts + self.level.boxes)
-        self.bug = Food(self, False,
-                        self.snake.snake_parts + self.level.boxes)
+        self.objects = self.snake.snake_parts + self.level.boxes
+        self.food = Food(self, Sprites.APPLE, self.objects)
+        self.bug = Food(self, Sprites.BUG, self.objects)
+        self.pizza = Food(self, Sprites.PIZZA, self.objects)
+        self.carrot = Food(self, Sprites.CARROT, self.objects)
         self.score = Score(10, 10)
         self.pause = PauseButton((self.WIDTH - 118) / 2,
                                  (self.HEIGHT - 56) / 2)
@@ -100,6 +108,8 @@ class SnakeGame:
 
     def run(self):
         while self.GAME_RUNNING:
+            self.objects = self.snake.snake_parts + self.level.boxes + \
+                           [self.food, self.bug, self.pizza, self.carrot]
             self.level.update(self.display)
             for snake_part in self.snake.snake_parts:
                 self.display.blit(snake_part.surf, snake_part.rect)
@@ -107,8 +117,11 @@ class SnakeGame:
             for change_rotation_part in self.snake.change_rotation_parts:
                 self.display.blit(change_rotation_part.surf,
                                   change_rotation_part.rect)
+
             self.display.blit(self.food.scene, self.food.rect)
             self.display.blit(self.bug.scene, self.bug.rect)
+            self.display.blit(self.pizza.scene, self.pizza.rect)
+            self.display.blit(self.carrot.scene, self.carrot.rect)
 
             self.health_bar.show_health(self.HEALTH)  # Показывает количество жизней
 
@@ -116,7 +129,7 @@ class SnakeGame:
                 self.GAME_RUNNING = False
                 return
 
-            if len(self.snake.snake_parts) >= self.TARGET:
+            if self.score.is_enough(self.TARGET):
                 self.next_level()
 
             if self.snake.check_self_collision() \
@@ -127,10 +140,10 @@ class SnakeGame:
                 self.restart_game()
 
             self.snake.update()
-            self.food.update(self, self.snake,
-                             self.score, self.snake.snake_parts + self.level.boxes)
-            self.bug.update(self, self.snake,
-                            self.score, self.snake.snake_parts + self.level.boxes)
+            self.food.update(self, self.snake, self.score, self.objects)
+            self.bug.update(self, self.snake, self.score, self.objects)
+            self.pizza.update(self, self.snake, self.score, self.objects)
+            self.carrot.update(self, self.snake, self.score, self.objects)
             self.score.draw(self.display)
 
             pg.display.flip()

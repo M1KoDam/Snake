@@ -12,6 +12,7 @@ class Snake:
         self.SPEED = 4
         self.START_COORDS = (64, 64)
         self.direction_delay = 0
+        self.delay = self.SIZE + 2
         self.movement = Movement(self.SPEED, 0, 0)
 
         self.snake_parts = []
@@ -32,11 +33,11 @@ class Snake:
 
         temp_change_rotation_part = []
         for change_rotation_part in self.change_rotation_parts:
-            if not (change_rotation_part.update(self.snake_parts[-1])):
+            if not (change_rotation_part.update(self.snake_parts[-1], self.SPEED)):
                 temp_change_rotation_part.append(change_rotation_part)
         self.change_rotation_parts = temp_change_rotation_part
 
-        if self.direction_delay >= self.SIZE:
+        if self.direction_delay > self.delay:
             keys = pg.key.get_pressed()
             if keys[pg.K_LEFT] or keys[pg.K_a]:
                 self.change_direction(self.movement.direction[1],
@@ -85,7 +86,7 @@ class Snake:
         head = self.snake_parts[0]
         for part in self.snake_parts[1:]:
             if part.rect.colliderect(
-                    head.rect) and self.direction_delay >= self.SIZE + 1:
+                    head.rect) and self.direction_delay > self.delay:
                 return True
         return False
 
@@ -105,3 +106,28 @@ class Snake:
         if head.y < 0 or head.y + self.SIZE > level.HEIGHT:
             return True
         return False
+
+    def increase_speed(self):
+        if self.SPEED == 8:
+            return
+        self.SPEED = min(8, self.SPEED*2)
+        block_length = get_block_length(self.SPEED)
+        self.snake_parts[-1].increase_speed(self.SPEED, len(self.snake_parts)-1)
+        a = self.snake_parts[-1]
+        for i in range(len(self.snake_parts) - 1):
+            self.snake_parts[i].movements = make_movements_copy(a.movements[:(block_length * i) + 2])
+
+        self.movement = self.snake_parts[0].movements[-1]
+
+    def decrease_speed(self):
+        if self.SPEED == 2:
+            return
+        self.SPEED = max(2, self.SPEED//2)
+        block_length = get_block_length(self.SPEED)
+        self.snake_parts[-1].decrease_speed(self.SPEED, len(self.snake_parts) - 1)
+        a = self.snake_parts[-1]
+
+        for i in range(len(self.snake_parts) - 1):
+            self.snake_parts[i].movements = make_movements_copy(a.movements[:(block_length * i)+2])
+
+        self.movement = self.snake_parts[0].movements[-1]

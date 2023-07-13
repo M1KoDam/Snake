@@ -14,6 +14,11 @@ class Score:
         self.text = self.font.render(f"Score: {self.score}",
                                      True, self.font_color)
 
+    def is_enough(self, target):
+        if self.score >= target:
+            return True
+        return False
+
     def update(self):
         self.text = self.font.render(f"Score: {self.score}",
                                      True, self.font_color)
@@ -21,8 +26,8 @@ class Score:
     def draw(self, surface):
         surface.blit(self.text, (self.x, self.y))
 
-    def increment_score(self):
-        self.score += 1
+    def increment_score(self, multiply=1):
+        self.score += 1 * multiply
         self.update()
 
     def decrement_score(self):
